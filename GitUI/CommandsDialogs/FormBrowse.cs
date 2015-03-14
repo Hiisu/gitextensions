@@ -228,6 +228,14 @@ namespace GitUI.CommandsDialogs
             RevisionGrid.MenuCommands.MenuChanged += (sender, e) => _formBrowseMenus.OnMenuCommandsPropertyChanged();
         }
 
+	    public FormBrowse(GitUICommands aCommands, string filter, string selectCommit) : this(aCommands, filter)
+	    {
+		    if (!string.IsNullOrEmpty(selectCommit))
+		    {
+			    RevisionGrid.SetInitialRevision(new GitRevision(Module, selectCommit));
+		    }
+	    }
+
         private new void Translate()
         {
             base.Translate();
@@ -1727,7 +1735,7 @@ namespace GitUI.CommandsDialogs
 			        {
 				        Process process = new Process();
 				        process.StartInfo.FileName = Application.ExecutablePath;
-				        process.StartInfo.Arguments = "browse -filter=" + t.Result.Commit;
+				        process.StartInfo.Arguments = "browse -commit=" + t.Result.Commit;
 				        process.StartInfo.WorkingDirectory = Path.Combine(Module.WorkingDir, submoduleName.EnsureTrailingPathSeparator());
 				        process.Start();
 			        });

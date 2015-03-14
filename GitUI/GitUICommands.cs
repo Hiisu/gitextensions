@@ -1456,12 +1456,12 @@ namespace GitUI
             return StartSettingsDialog(owner, GitUI.CommandsDialogs.SettingsDialog.Pages.GitConfigSettingsPage.GetPageReference());
         }
 
-        public bool StartBrowseDialog(IWin32Window owner, string filter)
+        public bool StartBrowseDialog(IWin32Window owner, string filter, string selectedCommit)
         {
             if (!InvokeEvent(owner, PreBrowse))
                 return false;
 
-            var form = new FormBrowse(this, filter);
+            var form = new FormBrowse(this, filter, selectedCommit);
             Application.Run(form);
 
             InvokeEvent(owner, PostBrowse);
@@ -1471,8 +1471,13 @@ namespace GitUI
 
         public bool StartBrowseDialog(string filter)
         {
-            return StartBrowseDialog(null, filter);
+			return StartBrowseDialog(null, filter, null);
         }
+
+		public bool StartBrowseDialog(string filter, string selectedCommit)
+		{
+			return StartBrowseDialog(null, filter, selectedCommit);
+		}
 
         public void StartFileHistoryDialog(IWin32Window owner, string fileName, GitRevision revision, bool filterByRevision, bool showBlame)
         {
@@ -2000,7 +2005,7 @@ namespace GitUI
 
         private void RunBrowseCommand(string[] args)
         {
-            StartBrowseDialog(GetParameterOrEmptyStringAsDefault(args, "-filter"));
+			StartBrowseDialog(GetParameterOrEmptyStringAsDefault(args, "-filter"), GetParameterOrEmptyStringAsDefault(args, "-commit"));
         }
 
         private static string GetParameterOrEmptyStringAsDefault(string[] args, string paramName)
