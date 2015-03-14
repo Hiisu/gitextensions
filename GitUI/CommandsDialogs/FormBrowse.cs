@@ -1719,7 +1719,7 @@ namespace GitUI.CommandsDialogs
             if (DiffFiles.SelectedItem == null)
                 return;
 
-	        if (DiffFiles.SelectedItem.IsSubmodule)
+	        if ( AppSettings.OpenSubmoduleDiffInSeparateWindow && DiffFiles.SelectedItem.IsSubmodule)
 	        {
 		        var submoduleName = DiffFiles.SelectedItem.Name;
 		        DiffFiles.SelectedItem.SubmoduleStatus.ContinueWith(
