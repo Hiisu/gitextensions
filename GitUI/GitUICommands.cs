@@ -1471,13 +1471,13 @@ namespace GitUI
 
         public bool StartBrowseDialog(string filter)
         {
-			return StartBrowseDialog(null, filter, null);
+            return StartBrowseDialog(null, filter, null);
         }
 
-		public bool StartBrowseDialog(string filter, string selectedCommit)
-		{
-			return StartBrowseDialog(null, filter, selectedCommit);
-		}
+        public bool StartBrowseDialog(string filter, string selectedCommit)
+        {
+            return StartBrowseDialog(null, filter, selectedCommit);
+        }
 
         public void StartFileHistoryDialog(IWin32Window owner, string fileName, GitRevision revision, bool filterByRevision, bool showBlame)
         {
@@ -2005,7 +2005,7 @@ namespace GitUI
 
         private void RunBrowseCommand(string[] args)
         {
-			StartBrowseDialog(GetParameterOrEmptyStringAsDefault(args, "-filter"), GetParameterOrEmptyStringAsDefault(args, "-commit"));
+            StartBrowseDialog(GetParameterOrEmptyStringAsDefault(args, "-filter"), GetParameterOrEmptyStringAsDefault(args, "-commit"));
         }
 
         private static string GetParameterOrEmptyStringAsDefault(string[] args, string paramName)

@@ -228,13 +228,13 @@ namespace GitUI.CommandsDialogs
             RevisionGrid.MenuCommands.MenuChanged += (sender, e) => _formBrowseMenus.OnMenuCommandsPropertyChanged();
         }
 
-	    public FormBrowse(GitUICommands aCommands, string filter, string selectCommit) : this(aCommands, filter)
-	    {
-		    if (!string.IsNullOrEmpty(selectCommit))
-		    {
-			    RevisionGrid.SetInitialRevision(new GitRevision(Module, selectCommit));
-		    }
-	    }
+        public FormBrowse(GitUICommands aCommands, string filter, string selectCommit) : this(aCommands, filter)
+        {
+            if (!string.IsNullOrEmpty(selectCommit))
+            {
+                RevisionGrid.SetInitialRevision(new GitRevision(Module, selectCommit));
+            }
+        }
 
         private new void Translate()
         {
@@ -1727,24 +1727,24 @@ namespace GitUI.CommandsDialogs
             if (DiffFiles.SelectedItem == null)
                 return;
 
-	        if ( AppSettings.OpenSubmoduleDiffInSeparateWindow && DiffFiles.SelectedItem.IsSubmodule)
-	        {
-		        var submoduleName = DiffFiles.SelectedItem.Name;
-		        DiffFiles.SelectedItem.SubmoduleStatus.ContinueWith(
-			        (t) =>
-			        {
-				        Process process = new Process();
-				        process.StartInfo.FileName = Application.ExecutablePath;
-				        process.StartInfo.Arguments = "browse -commit=" + t.Result.Commit;
-				        process.StartInfo.WorkingDirectory = Path.Combine(Module.WorkingDir, submoduleName.EnsureTrailingPathSeparator());
-				        process.Start();
-			        });
-	        }
-	        else
-	        {
+            if ( AppSettings.OpenSubmoduleDiffInSeparateWindow && DiffFiles.SelectedItem.IsSubmodule)
+            {
+                var submoduleName = DiffFiles.SelectedItem.Name;
+                DiffFiles.SelectedItem.SubmoduleStatus.ContinueWith(
+                    (t) =>
+                    {
+                        Process process = new Process();
+                        process.StartInfo.FileName = Application.ExecutablePath;
+                        process.StartInfo.Arguments = "browse -commit=" + t.Result.Commit;
+                        process.StartInfo.WorkingDirectory = Path.Combine(Module.WorkingDir, submoduleName.EnsureTrailingPathSeparator());
+                        process.Start();
+                    });
+            }
+            else
+            {
 
-		        UICommands.StartFileHistoryDialog(this, (DiffFiles.SelectedItem).Name);
-	        }
+                UICommands.StartFileHistoryDialog(this, (DiffFiles.SelectedItem).Name);
+            }
         }
 
         private void ToolStripButtonPushClick(object sender, EventArgs e)
