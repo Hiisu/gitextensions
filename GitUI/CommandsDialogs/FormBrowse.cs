@@ -1719,7 +1719,24 @@ namespace GitUI.CommandsDialogs
             if (DiffFiles.SelectedItem == null)
                 return;
 
-            UICommands.StartFileHistoryDialog(this, (DiffFiles.SelectedItem).Name);
+	        if (DiffFiles.SelectedItem.IsSubmodule)
+	        {
+		        var submoduleName = DiffFiles.SelectedItem.Name;
+		        DiffFiles.SelectedItem.SubmoduleStatus.ContinueWith(
+			        (t) =>
+			        {
+				        Process process = new Process();
+				        process.StartInfo.FileName = Application.ExecutablePath;
+				        process.StartInfo.Arguments = "browse -filter=" + t.Result.Commit;
+				        process.StartInfo.WorkingDirectory = Path.Combine(Module.WorkingDir, submoduleName.EnsureTrailingPathSeparator());
+				        process.Start();
+			        });
+	        }
+	        else
+	        {
+
+		        UICommands.StartFileHistoryDialog(this, (DiffFiles.SelectedItem).Name);
+	        }
         }
 
         private void ToolStripButtonPushClick(object sender, EventArgs e)
